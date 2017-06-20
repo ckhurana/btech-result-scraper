@@ -1,0 +1,63 @@
+from flask import Flask, render_template
+from generator import gen
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+	return "Homepage"
+
+@app.route('/template/<name>')
+def template(name):
+	return render_template("template.html", name=name)
+
+
+@app.route('/result')
+def result():
+	return '<h1>result is coming here soon</h1>'
+
+
+@app.route('/result/<int:rollno>')
+def result_no(rollno):
+	t, name = gen.btech_res(rollno)
+	x = []
+	if not t or not name:
+		return "Invalid"
+	elif len(t) > 1:
+		total = 0.0
+		mtotal = 0.0
+		for i in t:
+			x.append(i[:3])
+			total += int(i[1])
+			mtotal += int(i[2])
+		x.append(['Total', str(int(total)), str(int(mtotal))])
+		percentage = '{:.2%}'.format(total/mtotal)
+	elif len(t) == 1:
+		x.append(t[0])
+	else:
+		x.append("Some Error Occured")
+	return render_template('marks.html', marks=x, name=name.title(), percentage=percentage)
+
+
+@app.route('/result2/<int:rollno>')
+def result2_no(rollno):
+	t, name = gen.btech_res(rollno)
+	x = []
+	if len(t) > 1:
+		total = 0.0
+		mtotal = 0.0
+		for i in t:
+			i[0] = '{:->5}'.format(i[0])
+			x.append(i[0] + " - " + i[1] + "/" + i[2])
+			total += int(i[1])
+			mtotal += int(i[2])
+		x.append('{:->5}'.format('Total') + " - " + str(int(total)) + "/" + str(int(mtotal)))
+		x.append('Percentage: {:.2%}'.format(total/mtotal))
+	elif len(t) == 1:
+		x.append(t[0])
+	else:
+		x.append("Some Error Occured")
+	return render_template('marks2.html', marks=x, name=name.title())
+
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', port=80, debug=False)

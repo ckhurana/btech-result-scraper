@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<title>Marks - B. Tech. CS</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style type="text/css">
+		td, th {
+			text-align: center;
+		}
+	</style>
+	<body>
+		<div class="container">
+			<div class="row">
+			  	<div class="col-sm-12 col-md-8 col-md-offset-2">
+				  	<h3>Marks List</h3>
+				  	<form class="form-group" method="POST">
+				  		<select id="college" class="form-control" name="college" onchange="this.form.submit()">
+							<option value="">----- Select College -----</option>
+							<option value="001">Acharya Narendra Dev College-(001)</option>
+							<option value="003">Atma Ram Sanatan Dharam College-(003)</option>
+							<option value="009">Bhaskaracharya College of Applied Sciences-(009)</option>
+							<option value="015">Deen Dayal Upadhyaya College-(015)</option>
+							<option value="016">Delhi College Of Arts &amp; Commerce-(016)</option>
+							<option value="025">Hans Raj College-(025)</option>
+							<option value="029">I.P.College For Women-(029)</option>
+							<option value="033">Kalindi College-(033)</option>
+							<option value="035">Keshav Mahavidyalaya-(035)</option>
+							<option value="041">Maharaja Agrasen College-(041)</option>
+							<option value="043">Maitreyi College-(043)</option>
+							<option value="047">Miranda House-(047)</option>
+							<option value="053">P.G.D.A.V. College (Day)-(053)</option>
+							<option value="055">Rajdhani College-(055)</option>
+							<option value="058">Ram Lal Anand College (Day)-(058)</option>
+							<option value="020">Ramanujan College-(020)</option>
+							<option value="068">S.G.T.B. Khalsa College-(068)</option>
+							<option value="067">Saheed Sukhdev College of Business Studies-(067)</option>
+							<option value="066">Shaheed Rajguru College of Applied Sciences for Women-(066)</option>
+							<option value="071">Shivaji College-(071)</option>
+							<option value="075">Shyama Prasad Mukherjee College-(075)</option>
+							<option value="078">Sri Guru Gobind Singh College Of Commerce-(078)</option>
+							<option value="081">Swami Shraddhanand College-(081)</option>
+						</select>	
+				  	</form>
+
+				  	{% if marks %}
+				  		<table class="table table-hover">
+							<caption>{{ college.name }}</caption>
+							<thead>
+								<th>Roll No</th>
+								<th style="text-align:left;">Name</th>
+								<th>Percentage</th>
+							</thead>
+							{% for rn, name, perc in marks %}
+							<tr>
+								<td>{{ rn }}</td>
+								<td style="text-align:left">{{ name }}</td>
+								<td>{{ perc }}%</td>
+							</tr>
+							{% endfor %}
+						</table>
+						<div class="alert alert-info">College Average: {{ average }}</div>
+				  	{% else %}
+				  		<div class="alert alert-warning">No entry available</div>
+				  	{% endif %}
+			  	</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			{% if college %}
+				document.getElementById("college").value = "{{ college['code'] }}";
+				// function selectionChanged() {
+				// 	var s = document.getElementById("college");
+				// 	alert("Changed" + s.options[s.selectedIndex].value);
+				// }
+			{% endif %}
+		</script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+	</body>
+</html>
