@@ -4,3 +4,4 @@ COPY . /usr/src/app
 
 CMD ["python", "main.py"]
 
+EXPOSE 5000

@@ -8,7 +8,7 @@
 		}
 	</style>
 	<body>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 			  	<div class="col-sm-12 col-md-8 col-md-offset-2">
 				  	<h3>Marks List</h3>
@@ -41,27 +41,25 @@
 						</select>	
 				  	</form>
 					{% if debug %}
-				  		<div class="alert alert-warning">{{ debug }}</div>
+						
 					{% endif %}
 				  	{% if marks %}
-						<div class="alert alert-info">College Average: {{ average }}</div>
 				  		<table class="table table-hover">
+							<caption>{{ college.name }}</caption>
 							<thead>
-								<th>S. No.</th>
-								<th>Roll No.</th>
+								<th>Roll No</th>
 								<th style="text-align:left;">Name</th>
 								<th>Percentage</th>
 							</thead>
-							
 							{% for rn, name, perc in marks %}
 							<tr>
-								<td>{{ loop.index }}</td>
 								<td>{{ rn }}</td>
 								<td style="text-align:left">{{ name }}</td>
 								<td>{{ perc }}%</td>
 							</tr>
 							{% endfor %}
 						</table>
+						<div class="alert alert-info">College Average: {{ average }}</div>
 				  	{% else %}
 				  		<div class="alert alert-warning">No entry available</div>
 				  	{% endif %}
@@ -78,7 +76,6 @@
 				// }
 			{% endif %}
 		</script>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
 	</body>
 </html>

@@ -47,28 +47,36 @@ def result():
 	college = {}
 	marks = []
 	average = 0.0
-
+	debug = ""
 	if request.method == 'POST':
 		college['code'] = request.form.get('college')
-		#college['college_name'] = request.form.college_name
-		arg = "__" + college['code'][1:] + "%"
-		marks = query_db("SELECT rollno, name, percentage FROM marks where rollno LIKE ? ORDER BY rollno ", [arg])
+		sort = request.args.get('sort')
+		order = request.args.get('order')
+		if sort != "percentage":
+			sort = "rollno"
+		like = "__" + college['code'][1:] + "%"
+		#debug = sort
+		if order == 'desc':
+			marks = query_db("SELECT rollno, name, percentage FROM marks where rollno LIKE ? ORDER BY "+ sort +" DESC", [like])
+		else:
+			marks = query_db("SELECT rollno, name, percentage FROM marks where rollno LIKE ? ORDER BY " + sort, [like])
 		for i in marks:
 			average += float(i[2])
 		if len(marks) > 0:
 			average /= (len(marks) * 100)
 		average = '{:.2%}'.format(average)
-		return render_template('result.html', marks=marks, college=college, average=average)
+		return render_template('result.html', marks=marks, college=college, average=average, debug=debug)
 	return render_template('result.html')
 
 
 @app.route('/result/<int:rollno>')
 def result_no(rollno):
-	t, name = gen.btech_res(rollno)
+	k = gen.btech_res(rollno)
+	if not k:
+		return "Invalid URL"
+	t, name = k
 	x = []
-	if not t or not name:
-		return "Invalid"
-	elif len(t) > 1:
+	if len(t) > 1:
 		total = 0.0
 		mtotal = 0.0
 		for i in t:
@@ -105,4 +113,4 @@ def result2_no(rollno):
 	return render_template('marks2.html', marks=x, name=name.title())
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=80, debug=True)
+	app.run(host='0.0.0.0', port=5000, debug=False)
