@@ -52,7 +52,7 @@ def result():
 		college['code'] = request.form.get('college')
 		sort = request.args.get('sort')
 		order = request.args.get('order')
-		if sort != "percentage":
+		if sort != "percentage" and sort != "name":
 			sort = "rollno"
 		like = "__" + college['code'][1:] + "%"
 		#debug = sort
