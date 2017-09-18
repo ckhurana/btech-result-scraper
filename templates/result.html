@@ -51,7 +51,7 @@
 								<th>S. No.</th>
 								<th>Roll No.</th>
 								<th style="text-align:left;">Name</th>
-								<th>Percentage</th>
+								<th onclick="toggleLink()">Percentage</th>
 							</thead>
 							
 							{% for rn, name, perc in marks %}
@@ -78,6 +78,11 @@
 				// 	alert("Changed" + s.options[s.selectedIndex].value);
 				// }
 			{% endif %}
+			
+			function toggleLink() {
+				window.location("http://btech.chiragkhurana.com?sort=percentage&order=desc")
+			}
+						
 		</script>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>

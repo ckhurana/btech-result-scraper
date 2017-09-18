@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, redirect, url_for, g
 from generator import gen
 import sqlite3
 
@@ -30,19 +30,13 @@ def query_db(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 
-# Routing
-
-@app.route('/')
-def index():
-
-	return "Homepage"
-
 @app.route('/template/<name>')
 def template(name):
 	return render_template("template.html", name=name)
 
 
-@app.route('/result/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def result():
 	college = {}
 	marks = []
@@ -68,8 +62,11 @@ def result():
 		return render_template('result.html', marks=marks, college=college, average=average, debug=debug)
 	return render_template('result.html')
 
+@app.route('/result')
+def redirect_root():
+	return redirect(url_for('index'))
 
-@app.route('/result/<int:rollno>')
+@app.route('/<int:rollno>')
 def result_no(rollno):
 	k = gen.btech_res(rollno)
 	if not k:
