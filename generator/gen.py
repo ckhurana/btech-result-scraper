@@ -83,15 +83,15 @@ def stud_rec(rno, name):
     except:
         flag = False
         with open('marks.txt') as markslist:
-                for line in markslist:
-                        if rno in line:
-                                flag = True
-                                percentage = line.split(',')[-1]
-                                # RETURN
-				return ["Percentage (upto 7th sem) {:.2%}".format(float(percentage)/100)], name
-                                break
+            for line in markslist:
+                if rno in line:
+                    flag = True
+                    percentage = line.split(',')[-1]
+                    # RETURN
+                    return ["Percentage (upto 7th sem) {:.2%}".format(float(percentage)/100)], name
+                    break
         if not flag:
-                print ("<h3>Some Problem Occured!!!</h3>")
+            print ("<h3>Some Problem Occured!!!</h3>")
 
 
 def btech_res(rollno):
@@ -100,7 +100,7 @@ def btech_res(rollno):
         recfile = open("marks.txt", "U")
         rec = recfile.read()
         rec = rec.split("\n")
-        
+
         for r in rec:
             row = r.split(',')
             if r and row[0] == p_rollno:
