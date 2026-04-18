@@ -1,0 +1,9 @@
+
+services:
+  btech:
+    build: .
+    restart: always
+    ports:
+      - "8083:8000"
+    volumes:
+      - ./db:/app/db

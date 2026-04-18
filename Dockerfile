@@ -1,13 +1,16 @@
-FROM python:3.9-slim
+FROM python:3.9-slim-buster
 
 WORKDIR /app
 
-# Copy requirements first for better caching
-COPY requirements.txt /app/requirements.txt
+# Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
-# Copy the entire source code (since src/ might not exist in all repos)
-COPY . /app/
+# Copy source code
+COPY . .
 
-# Adjust the wsgi entrypoint based on the actual app structure
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "wsgi:app"]
+EXPOSE 8000
+
+# Using main:app because the Flask instance is in main.py
+# and restored --workers 3 from backup configuration
+CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "main:app"]
