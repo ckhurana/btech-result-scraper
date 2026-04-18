@@ -13,4 +13,5 @@ EXPOSE 8000
 
 # Using main:app because the Flask instance is in main.py
 # and restored --workers 3 from backup configuration
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "main:app"]
+# Set PYTHONPATH to current directory to ensure module 'main' is found
+CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "--env", "PYTHONPATH=.", "main:app"]
